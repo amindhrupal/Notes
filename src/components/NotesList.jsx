@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { fetchNotes, deleteNote, updateNote } from "../api/noteApi";
 import Note from "./Note";
 import NoteForm from "./NoteForm";
@@ -7,6 +7,8 @@ const NotesList = () => {
   const [notes, setNotes] = useState([]);
   const [editingNote, setEditingNote] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+
+  const inputFormRef = useRef(null);
 
   useEffect(() => {
     const getNotes = async () => {
@@ -35,6 +37,16 @@ const NotesList = () => {
 
   const handleEdit = (note) => {
     setEditingNote(note);
+    console.log("it is scrolling babe");
+
+    if (inputFormRef.current) {
+      inputFormRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+        inline: "nearest",
+      });
+      window.scrollBy(0, -80);
+    }
   };
 
   const handleSaveEdit = async (updatedNote) => {

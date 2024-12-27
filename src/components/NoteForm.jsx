@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, forwardRef } from "react";
 import { addNote, updateNote } from "../api/noteApi";
 
-const NoteForm = ({ setNotes, existingNote, onSaveEdit }) => {
+const NoteForm = forwardRef(({ setNotes, existingNote, onSaveEdit }, ref) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
@@ -51,8 +51,10 @@ const NoteForm = ({ setNotes, existingNote, onSaveEdit }) => {
     setContent("");
     setImage(null);
   };
+
   return (
     <form
+      ref={ref} // Attach the ref here
       onSubmit={handleSubmit}
       className="bg-white p-6 rounded-lg shadow-lg mb-6 w-full md:w-4/5 mx-auto"
     >
@@ -88,5 +90,6 @@ const NoteForm = ({ setNotes, existingNote, onSaveEdit }) => {
       </div>
     </form>
   );
-};
+});
+
 export default NoteForm;
