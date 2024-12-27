@@ -1,11 +1,28 @@
 const Note=require("../models/Note");
 
-const getNotes= async(req,res)=>{
+const getNotes = async (req, res) => {
     try {
-        const notes=await Note.find();
+        const { searchQuery } = req.query; 
+        console.log("Received search query:", searchQuery);
+
+        let notes;
+        if (searchQuery) {
+            
+            const regex = new RegExp(searchQuery, 'i'); 
+            notes = await Note.find({
+                $or: [
+                    { title: { $regex: regex } },
+                    { content: { $regex: regex } }
+                ]
+            });
+        } else {
+        
+            notes = await Note.find();
+        }
+
         res.status(200).json(notes);
     } catch (error) {
-        res.status(500).json({message:"Failed to fetch notes", error});
+        res.status(500).json({ message: "Failed to fetch notes", error });
     }
 };
 

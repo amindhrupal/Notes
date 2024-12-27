@@ -36,7 +36,6 @@ const NoteForm = ({ setNotes, existingNote, onSaveEdit }) => {
       });
 
       if (updatedNote) {
-        // Update the list of notes after saving the updated note
         setNotes((prevNotes) =>
           prevNotes.map((note) =>
             note._id === updatedNote._id ? updatedNote : note
@@ -44,12 +43,10 @@ const NoteForm = ({ setNotes, existingNote, onSaveEdit }) => {
         );
       }
     } else {
-      // Adding a new note if no existingNote
       const newNote = await addNote(formData);
       setNotes((prevNotes) => [newNote, ...prevNotes]);
     }
 
-    // Reset the form after submission
     setTitle("");
     setContent("");
     setImage(null);

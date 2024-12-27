@@ -2,10 +2,7 @@ import axios from "axios";
 
 const API_URL="http://localhost:5000/api/notes";
 
-export const fetchNotes=async()=>{
-    const response =await axios.get(API_URL);
-    return response.data;
-};
+
 
 //add a note
 export const addNote=async(note)=>{
@@ -29,4 +26,10 @@ export const updateNote = async (note) => {
     return response.data;
   };
   
-
+//fetch notes
+export const fetchNotes = async (searchQuery = "") => {
+    const response = await axios.get("http://localhost:5000/api/notes", {
+      params: { searchQuery }, 
+    });
+    return response.data;
+  };
